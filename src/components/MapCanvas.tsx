@@ -25,10 +25,6 @@ const MapCanvas: React.FC = () => {
   const [municipalities, setMunicipalities] = useState<MunicipalityInfo[]>([]);
   const [selectedMunicipality, setSelectedMunicipality] =
     useState<MunicipalityInfo | null>(null);
-  const [popupPosition, setPopupPosition] = useState<{
-    x: number;
-    y: number;
-  } | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -135,7 +131,6 @@ const MapCanvas: React.FC = () => {
           const muniInfo = municipalities.find((m) => m.name === muniName);
           if (muniInfo) {
             setSelectedMunicipality(muniInfo);
-            setPopupPosition({ x: e.clientX, y: e.clientY });
           }
           break;
         }
@@ -149,18 +144,15 @@ const MapCanvas: React.FC = () => {
   }, [geoData, municipalities]);
 
   return (
-    <div className="relative w-full h-screen">
-      <canvas
-        ref={canvasRef}
-        width={1000}
-        height={800}
-        className="w-full h-full"
-      />
-      {selectedMunicipality && popupPosition && (
-        <div
-          className="absolute bg-white border border-gray-300 p-4 rounded shadow-lg"
-          style={{ top: popupPosition.y, left: popupPosition.x }}
-        >
+    <div className="flex justify-center items-center">
+      <div className="w-full h-54 bg-red">
+        <h2>Mapa de atuação da ESPMA</h2>
+      </div>
+      <div className="">
+        <canvas ref={canvasRef} width={600} height={800} />
+      </div>
+      {selectedMunicipality && (
+        <div className="absolute top-0 bg-white border border-gray-300 p-4 rounded shadow-lg">
           <h2 className="text-lg font-bold">{selectedMunicipality.name}</h2>
           <p>População: {selectedMunicipality.population.toLocaleString()}</p>
           <p>{selectedMunicipality.infos}</p>
