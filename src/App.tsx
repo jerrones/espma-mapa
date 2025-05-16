@@ -3,7 +3,7 @@ import MapCanvas from "./components/MapCanvas";
 
 const App: React.FC = () => {
   return (
-    <div className="w-full h-screen">
+    <div className="relative">
       <MapCanvas />
     </div>
   );
